@@ -1,6 +1,7 @@
 ﻿using System;
 using NLog.Web;
 using System.IO;
+using System.Linq;
 
 namespace Ticketing_System
 {
@@ -18,6 +19,7 @@ namespace Ticketing_System
                 Console.WriteLine("1) Look at Bug/Defect");
                 Console.WriteLine("2) Look at Enhancement");
                 Console.WriteLine("3) Look at Task");
+                Console.WriteLine("4) Perform Search");
                 Console.WriteLine("Enter any other key to exit.");
                 ticketType = Console.ReadLine();
                 logger.Info("User ticketType: {TicketType}", ticketType);
@@ -27,7 +29,6 @@ namespace Ticketing_System
                 if (ticketType == "1")
                 {
                     string ticketFilePath = Directory.GetCurrentDirectory() + "\\tickets.csv";
-
                     TicketFile ticketFile = new TicketFile(ticketFilePath);
                     do
                     {
@@ -186,8 +187,37 @@ namespace Ticketing_System
                             taskFile.AddTask(task);
                         }
                     } while (choice == "1" || choice == "2");
+                } else if (ticketType == "4"){
+                    Search search = new Search();
+                    do{
+                        int count = 0;
+                        Console.WriteLine("1) Search based on status");
+                        Console.WriteLine("2) Search based on priority");
+                        Console.WriteLine("3) Search based on submitter");
+                        Console.WriteLine("Enter any other key to exit.");
+                        choice = Console.ReadLine();
+                        logger.Info("User choice: {Choice}", choice);
+                        if(choice == "1"){
+                            Console.Write("Search status: ");
+                            var input = Console.ReadLine();
+
+                            foreach(var item in search.StatusSearch(input)){
+                                count++;
+                                Console.WriteLine(item + "\n");
+                            }
+                            Console.WriteLine($"There is {count} result(s) from your search of \"{input}\".");
+                        } else if (choice == "2"){
+                            Console.Write("Search priority: ");
+                            var input = Console.ReadLine();
+                            // Console.WriteLine(search.PrioritySearch(input));
+                        }else if (choice == "3"){
+                            Console.Write("Search submitter: ");
+                            var input = Console.ReadLine();
+                            // Console.WriteLine(search.SubmitterSearch(input));
+                        }
+                    }while(choice == "1" || choice == "2" || choice == "3");
                 }
-            } while (ticketType == "1" || ticketType == "2" || ticketType == "3");
+            } while (ticketType == "1" || ticketType == "2" || ticketType == "3" || ticketType == "4");
             logger.Info("Program ended");
         }
     }
