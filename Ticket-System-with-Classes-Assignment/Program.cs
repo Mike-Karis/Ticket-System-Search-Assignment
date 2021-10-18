@@ -200,12 +200,7 @@ namespace Ticketing_System
                         if(choice == "1"){
                             Console.Write("Search status: ");
                             var input = Console.ReadLine();
-
-                            foreach(var item in search.StatusSearch(input)){
-                                count++;
-                                Console.WriteLine(item + "\n");
-                            }
-                            Console.WriteLine($"There is {count} result(s) from your search of \"{input}\".");
+                            Console.WriteLine(search.StatusSearch(input));
                         } else if (choice == "2"){
                             Console.Write("Search priority: ");
                             var input = Console.ReadLine();

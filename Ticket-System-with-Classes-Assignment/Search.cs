@@ -24,16 +24,31 @@ namespace Ticketing_System
             logger.Info("Created search.");
         }
 
-        public IEnumerable<String> StatusSearch(string input){
-            var output = new List<String>();
+        public String StatusSearch(string input){
+            var ticketsOutput = new List<String>();
+            String output = "";
 
-            var tickets = ticketFile.Tickets.Where(Ticket => Ticket.status.Contains(input));
+            var tickets = ticketFile.Tickets.Where(Ticket => Ticket.status.Contains(input, StringComparison.OrdinalIgnoreCase));
             foreach(Ticket ticket in tickets){
-                output.Add(ticket.Display());
+                ticketsOutput.Add(ticket.Display());
             }
+            var enhancements = enhancementFile.Enhancements.Where(Enhancement => Enhancement.status.Contains(input, StringComparison.OrdinalIgnoreCase));
+            foreach(Enhancement enhancement in enhancements){
+                ticketsOutput.Add(enhancement.Display());
+            }
+            var tasks = taskFile.Tasks.Where(Task => Task.status.Contains(input, StringComparison.OrdinalIgnoreCase));
+            foreach(Task task in tasks){
+                ticketsOutput.Add(task.Display());
+            }
+            
+            foreach(var item in ticketsOutput){
+                output += item  + "\n";
+            }
+            output += ($"There is {ticketsOutput.Count} result(s) from your search of \"{input}\".\n");
 
-            logger.Info("{Count} tickets found", tickets.Count());
-            return output.ToList();
+            logger.Info("{Count} status found", ticketsOutput.Count());
+            return output;
         }
+        
     }
 }
