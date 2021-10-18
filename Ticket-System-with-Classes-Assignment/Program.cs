@@ -190,7 +190,6 @@ namespace Ticketing_System
                 } else if (ticketType == "4"){
                     Search search = new Search();
                     do{
-                        int count = 0;
                         Console.WriteLine("1) Search based on status");
                         Console.WriteLine("2) Search based on priority");
                         Console.WriteLine("3) Search based on submitter");
@@ -204,11 +203,11 @@ namespace Ticketing_System
                         } else if (choice == "2"){
                             Console.Write("Search priority: ");
                             var input = Console.ReadLine();
-                            // Console.WriteLine(search.PrioritySearch(input));
+                            Console.WriteLine(search.PrioritySearch(input));
                         }else if (choice == "3"){
                             Console.Write("Search submitter: ");
                             var input = Console.ReadLine();
-                            // Console.WriteLine(search.SubmitterSearch(input));
+                            Console.WriteLine(search.SubmitterSearch(input));
                         }
                     }while(choice == "1" || choice == "2" || choice == "3");
                 }
